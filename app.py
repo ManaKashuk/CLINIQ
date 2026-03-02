@@ -33,7 +33,7 @@ APP_TITLE = "CLINIQ"
 SUPPORT_EMAIL = "help@trial.edu"  # optional; change if needed
 CONTACT_NOTE = f"If you still need help, email <a href='mailto:{SUPPORT_EMAIL}'>{SUPPORT_EMAIL}</a>."
 DISCLAIMER = (
-    " ⚖️ Copyright @2026 CLINIQ Inc.⚖️ Disclaimer: This is a demo/training tool for SOP navigation and trial operations support. "
+    "⚖️ Disclaimer: This is a demo/training tool for SOP navigation and trial operations support. "
     "It is NOT clinical decision support and does not provide patient-specific medical advice. "
     "Do not enter PHI/PII. Always confirm with your protocol, site SOPs, and PI/QA."
 )
@@ -427,10 +427,9 @@ st.markdown(
     f"""
     <div style='text-align:left;'>
         <img src='data:image/png;base64,{logo_base64}' width='700'/>
-        <h5><i>Evidence-gated SOP guidance for CAR‑T and high-toxicity immunotherapy trial exceptions</i></h5>
+        <h5><i>SOP guidance for CAR‑T and high-toxicity immunotherapy trial exceptions</i></h5>
         <p>
             Ask what to do when something goes off‑script (missed window, documentation gap, chain‑of‑custody issue).
-            CLINIQ returns SOP‑anchored steps when it can cite the source; otherwise it should escalate.
         </p>
     </div>
     """,
@@ -691,7 +690,7 @@ st.markdown(
     """
     <hr style="margin-top:0.5rem; margin-bottom:0.5rem;">
     <div style="text-align:center; font-size:0.9rem; color:gray;">
-        © 2026 CLINIQ — demo/training tool only (no PHI/PII)
+        ⚖️ Copyright @2026 CLINIQ Inc. demo/training tool only (no PHI/PII)
     </div>
     """,
     unsafe_allow_html=True
