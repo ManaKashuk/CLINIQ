@@ -33,7 +33,7 @@ APP_TITLE = "CLINIQ"
 SUPPORT_EMAIL = "help@trial.edu"  # optional; change if needed
 CONTACT_NOTE = f"If you still need help, email <a href='mailto:{SUPPORT_EMAIL}'>{SUPPORT_EMAIL}</a>."
 DISCLAIMER = (
-    "⚖️ Disclaimer: This is a demo/training tool for SOP navigation and trial operations support. "
+    " ⚖️ Copyright @2026 CLINIQ Inc.⚖️ Disclaimer: This is a demo/training tool for SOP navigation and trial operations support. "
     "It is NOT clinical decision support and does not provide patient-specific medical advice. "
     "Do not enter PHI/PII. Always confirm with your protocol, site SOPs, and PI/QA."
 )
