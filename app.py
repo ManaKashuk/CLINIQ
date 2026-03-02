@@ -102,7 +102,7 @@ def require_login():
     u = st.text_input("Username", key="login_user")
     p = st.text_input("Password", type="password", key="login_pass")
 
-   if st.button("Login", type="primary", key="login_btn"):
+    if st.button("Login", type="primary", key="login_btn"):
     allowed_user = "Mana"
     allowed_pass = "pass123"
 
