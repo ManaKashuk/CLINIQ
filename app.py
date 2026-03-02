@@ -74,7 +74,7 @@ def _require_login():
 
 _require_login()
 
-    st.markdown("### 🔒 CLINIQ Access")
+st.markdown("### 🔒 CLINIQ Access")
     u = st.text_input("Username", key="login_user")
     p = st.text_input("Password", type="password", key="login_pass")
     if st.button("Log in", type="primary", key="login_btn"):
