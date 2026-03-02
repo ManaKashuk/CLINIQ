@@ -342,9 +342,6 @@ try:
 except Exception:
     logo_base64 = ""
 
-# Login gate
-_require_login(logo_base64)
-
 # Chat avatar logo
 try:
     chat_logo = Image.open("chat.png")  # put beside this script
