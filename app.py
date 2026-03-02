@@ -102,22 +102,18 @@ def require_login():
     u = st.text_input("Username", key="login_user")
     p = st.text_input("Password", type="password", key="login_pass")
 
-    if st.button("Login", type="primary", key="login_btn"):
-        allowed_user = "Mana"
-        allowed_pass = "pass123"
+   if st.button("Login", type="primary", key="login_btn"):
+    allowed_user = "Mana"
+    allowed_pass = "pass123"
 
-        if (u or "").strip() == allowed_user and (p or "").strip() == allowed_pass:
-            st.session_state["is_authed"] = True
-            st.session_state["authed_user"] = allowed_user
-            st.success("Logged in.")
-            rerun()
-        else:
-            st.error("Invalid credentials.")
-            st.stop()
-
-    st.stop()
-
-
+    if (u or "").strip() == allowed_user and (p or "").strip() == allowed_pass:
+        st.session_state["is_authed"] = True
+        st.session_state["authed_user"] = (u or "").strip()   # <-- store real username
+        st.success("Logged in.")
+        rerun()
+    else:
+        st.error("Invalid credentials.")
+        st.stop()
 
 # =========================
 # SOP Health Check (primary data proof)
@@ -442,7 +438,7 @@ col_a, col_b = st.columns([3, 1])
 with col_a:
     username = st.session_state.get("user") or st.session_state.get("username") or ""
     if username:
-        st.caption(f"Signed in as {username}")
+        st.caption(f"Signed in as {st.session_state.get('authed_user','')}")
     else:
         st.caption("Signed in")
 
