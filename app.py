@@ -438,8 +438,14 @@ st.markdown(
 
 # Session controls (logout)
 col_a, col_b = st.columns([3, 1])
+
 with col_a:
-    st.caption(f"Signed in as {st.session_state.get('user','')}")
+    username = st.session_state.get("user") or st.session_state.get("username") or ""
+    if username:
+        st.caption(f"Signed in as {username}")
+    else:
+        st.caption("Signed in")
+
 with col_b:
     if st.button("Logout"):
         st.session_state.clear()
