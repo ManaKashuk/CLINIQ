@@ -39,42 +39,48 @@ DISCLAIMER = (
 )
 FINAL_VERIFICATION_LINE = "Verify with your site SOP and PI before execution."
 
+# ------------------ AUTH (simple, credible login) ------------------
+def _parse_users_env(env_val: str) -> Dict[str, str]:
+    """
+    Parse CLINIQ_USERS="user1:pass1,user2:pass2"
+    """
+    users = {}
+    if not env_val:
+        return users
+    for item in env_val.split(","):
+        item = item.strip()
+        if ":" in item:
+            u, p = item.split(":", 1)
+            users[u.strip()] = p.strip()
+    return users
 
-# ---------- Simple Login Gate (Prototype) ----------
-def _require_login():
-    if "auth" not in st.session_state:
-        st.session_state.auth = False
+def get_auth_users() -> Dict[str, str]:
+    # Preferred: Streamlit secrets
+    try:
+        users = st.secrets.get("auth", {}).get("users", {})
+        if isinstance(users, dict) and users:
+            return dict(users)
+    except Exception:
+        pass
+    # Fallback: env var
+    return _parse_users_env(os.environ.get("CLINIQ_USERS", ""))
 
-    if not st.session_state.auth:
-        # Show the same-size logo as the main app header (width=700)
-        if logo_base64:
-            st.markdown(
-                f"""
-                <div style='text-align:left; margin-bottom: 0.5rem;'>
-                    <img src='data:image/png;base64,{logo_base64}' width='700'/>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+def require_login():
+    st.session_state.setdefault("is_authed", False)
+    st.session_state.setdefault("authed_user", None)
 
-        st.title("MSU Authorized User Login")
-        st.caption("Access is restricted to Morgan State University personnel and approved affiliates.")
-        u = st.text_input("Username")
-        p = st.text_input("Password", type="password")
+    users = get_auth_users()
+    if not users:
+        # If no users configured, allow demo but show warning.
+        st.warning("Login is not configured (no users found in secrets or CLINIQ_USERS). Demo mode only.")
+        st.session_state["is_authed"] = True
+        st.session_state["authed_user"] = "demo"
+        return
 
-        if st.button("Login"):
-            allowed = st.secrets.get("users", {})
-            if u in allowed and p == allowed[u]:
-                st.session_state.auth = True
-                st.session_state.user = u
-                rerun()
-            else:
-                st.error("Invalid credentials.")
-        st.stop()
+    if st.session_state["is_authed"]:
+        return
 
-_require_login()
-
-st.markdown("### 🔒 CLINIQ Access")
+    st.markdown("### 🔒 CLINIQ Access")
     u = st.text_input("Username", key="login_user")
     p = st.text_input("Password", type="password", key="login_pass")
     if st.button("Log in", type="primary", key="login_btn"):
