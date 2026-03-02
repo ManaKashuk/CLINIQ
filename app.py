@@ -29,7 +29,7 @@ except AttributeError:
 # =========================
 # Config
 # =========================
-APP_TITLE = "CLINIQ: Trial-Integrity Diagnostic"
+APP_TITLE = "CLINIQ"
 SUPPORT_EMAIL = "help@trial.edu"  # optional; change if needed
 CONTACT_NOTE = f"If you still need help, email <a href='mailto:{SUPPORT_EMAIL}'>{SUPPORT_EMAIL}</a>."
 DISCLAIMER = (
@@ -370,7 +370,7 @@ with st.sidebar:
         index=role_options.index(st.session_state.get("user_role", "Clinical Research Coordinator")),
     )
 
-    # Evidence snippets controls how many SOP excerpts are shown as citations/evidence.
+    # Evidence snippets control how many SOP excerpts are shown as citations/evidence.
     if "evidence_k" not in st.session_state:
         st.session_state["evidence_k"] = 6  # default within 5–8
     st.session_state["evidence_k"] = st.slider(
@@ -427,7 +427,6 @@ st.markdown(
     f"""
     <div style='text-align:left;'>
         <img src='data:image/png;base64,{logo_base64}' width='700'/>
-        <h2>🧭 CLINIQ — Trial-Integrity SOP Assistant</h2>
         <h5><i>Evidence-gated SOP guidance for CAR‑T and high-toxicity immunotherapy trial exceptions</i></h5>
         <p>
             Ask what to do when something goes off‑script (missed window, documentation gap, chain‑of‑custody issue).
