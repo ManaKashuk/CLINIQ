@@ -333,6 +333,7 @@ def download_df_as_csv(df: pd.DataFrame, filename: str, label: str) -> None:
 # Main app
 # =========================
 st.set_page_config(page_title=APP_TITLE, layout="centered")
+require_login()
 
 # Load header logo BEFORE login gate
 try:
