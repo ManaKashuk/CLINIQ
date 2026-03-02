@@ -83,44 +83,40 @@ def show_answer_with_logo(answer_html: str, chat_logo_base64: str) -> None:
 
 
 # =========================
-# Login gate
+# login: 
 # =========================
-def _require_login(logo_base64: str) -> None:
-    if "auth" not in st.session_state:
-        st.session_state.auth = False
+def require_login():
+    """
+    Fixed-credential login:
+      Username: Mana
+      Password: pass123
+    """
+    st.session_state.setdefault("is_authed", False)
+    st.session_state.setdefault("authed_user", None)
 
-    if not st.session_state.auth:
-        if logo_base64:
-            st.markdown(
-                f"""
-                <div style='text-align:left; margin-bottom: 0.5rem;'>
-                    <img src='data:image/png;base64,{logo_base64}' width='700'/>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+    if st.session_state["is_authed"]:
+        return
 
-        st.title("Authorized User Login")
-        st.caption("Access is restricted to approved personnel and affiliates.")
-        u = st.text_input("Username")
-        p = st.text_input("Password", type="password")
+    st.markdown("### 🔒 Authorized User Login")
+    st.caption("Access is restricted to approved personnel and affiliates.")
+    u = st.text_input("Username", key="login_user")
+    p = st.text_input("Password", type="password", key="login_pass")
 
-        if st.button("Login", type="primary"):
-            u_clean = (u or "").strip()
-            p_clean = (p or "").strip()
+    if st.button("Login", type="primary", key="login_btn"):
+        allowed_user = "Mana"
+        allowed_pass = "pass123"
 
-            allowed = st.secrets.get("users", {})
-            if not isinstance(allowed, dict) or len(allowed) == 0:
-                st.error("Login is not configured: missing [users] in Streamlit Secrets.")
-                st.stop()
+        if (u or "").strip() == allowed_user and (p or "").strip() == allowed_pass:
+            st.session_state["is_authed"] = True
+            st.session_state["authed_user"] = allowed_user
+            st.success("Logged in.")
+            rerun()
+        else:
+            st.error("Invalid credentials.")
+            st.stop()
 
-            if u_clean in allowed and p_clean == str(allowed[u_clean]):
-                st.session_state.auth = True
-                st.session_state.user = u_clean
-                rerun()
-            else:
-                st.error("Invalid credentials.")
-        st.stop()
+    st.stop()
+
 
 
 # =========================
