@@ -94,27 +94,28 @@ def require_login():
     st.session_state.setdefault("is_authed", False)
     st.session_state.setdefault("authed_user", None)
 
+    # Already authenticated
     if st.session_state["is_authed"]:
         return
 
     st.markdown("### 🔒 Authorized User Login")
     st.caption("Access is restricted to approved personnel and affiliates.")
+
     u = st.text_input("Username", key="login_user")
     p = st.text_input("Password", type="password", key="login_pass")
 
     if st.button("Login", type="primary", key="login_btn"):
-    allowed_user = "Mana"
-    allowed_pass = "pass123"
+        allowed_user = "Mana"
+        allowed_pass = "pass123"
 
-    if (u or "").strip() == allowed_user and (p or "").strip() == allowed_pass:
-        st.session_state["is_authed"] = True
-        st.session_state["authed_user"] = (u or "").strip()   # <-- store real username
-        st.success("Logged in.")
-        rerun()
-    else:
-        st.error("Invalid credentials.")
-        st.stop()
-
+        if (u or "").strip() == allowed_user and (p or "").strip() == allowed_pass:
+            st.session_state["is_authed"] = True
+            st.session_state["authed_user"] = (u or "").strip()  # store real username
+            st.success("Logged in.")
+            rerun()
+        else:
+            st.error("Invalid credentials.")
+            st.stop()
 # =========================
 # SOP Health Check (primary data proof)
 # =========================
